@@ -6,7 +6,7 @@ export default {
   head: {
     title: 'base_nuxt_static',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'es'
     },
     meta: [
       { charset: 'utf-8' },
@@ -42,6 +42,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    "@nuxtjs/svg",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

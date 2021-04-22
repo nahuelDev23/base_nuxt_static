@@ -1,5 +1,6 @@
 <template>
   <div class='bg-yo'>
+     <IconDark class='chico' />
     <Nuxt />
   </div>
 </template>
@@ -60,3 +61,12 @@ html {
   background-color: #35495e;
 }
 </style>
+
+<script>
+export default {
+   name:'Default',
+   components:{
+        IconDark:()=>import('@/assets/icons/moon-solid.svg?inline'),
+    },
+}
+</script>

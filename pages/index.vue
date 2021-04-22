@@ -1,78 +1,42 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        base_nuxt_static
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div class="container mx-auto grid grid-cols-9 gap-1">
+    <div class='flex items-center flex-col bg-gray-700 text-gray-100 text-xl rounded p-4 ' v-for="(pkm,index) in pokemons" :key="'poke'+index">
+      <div class="mb-4">{{pkm.name}}</div>
+      <img :src="'https://pokeres.bastionbot.org/images/pokemon/' + pkm.id + '.png'" alt="">
     </div>
   </div>
+  
 </template>
 
 <script>
-export default {}
+import axios from "axios";
+export default {
+  name:'index',
+  data() {
+    return{
+      pokemons:[],
+      url:'https://pokeres.bastionbot.org/images/pokemon/'
+    }
+  },
+  
+  methods:{
+    async fetchData(){
+      const allPokemon = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
+      let pkm = await allPokemon.data
+      pkm.results.forEach(pokemon => {
+        pokemon.id = pokemon.url.split('/').filter(function(part){return !! part}).pop()
+        console.log(pokemon.id)
+        this.pokemons.push(pokemon)
+      });
+    }
+  },
+  created(){
+    this.fetchData();
+  },
+
+}
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
